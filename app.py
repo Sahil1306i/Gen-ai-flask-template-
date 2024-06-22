@@ -3,6 +3,10 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from flask_sqlalchemy import SQLAlchemy
 import openai
 import os
+from config import Config
+
+app.config.from_object(Config)
+openai.api_key = Config.OPENAI_API_KEY
 
 app = Flask(__name__)
 
@@ -10,7 +14,7 @@ app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your_jwt_secret_key')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost/dbname')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-openai.api_key = os.getenv('OPENAI_API_KEY', 'your_openai_api_key')
+#openai.api_key = os.getenv('OPENAI_API_KEY', 'your_openai_api_key')
 
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
